@@ -99,5 +99,9 @@ animal_do_reino(X, Y) :-
   familia_da_ordem(D, C),
   especie_da_familia(X, D).
 
-
+animal_do_filo(X, Y) :-
+  classe_do_filo(A, Y),
+  ordem_da_classe(B, A),
+  familia_da_ordem(C, B),
+  especie_da_familia(X, C).
 
