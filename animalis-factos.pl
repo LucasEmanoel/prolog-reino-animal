@@ -82,8 +82,15 @@ especie_da_familia(borboleta, borboletas).
 
 especie_da_familia(esponja, esponjas).
 
-% Cada animal
+% Consultar taxonomia completa do animal animal
+consultar_taxonomia(X, Familia, Ordem, Classe, Filo, Reino) :- 
+  especie_da_familia(X, Familia),
+  familia_da_ordem(Familia, Ordem),
+  ordem_da_classe(Ordem, Classe),
+  classe_do_filo(Classe, Filo),
+  filo_do_reino(Filo, Reino).
 
 % Cada nivel
+
 
 
