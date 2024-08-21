@@ -1,118 +1,134 @@
-% Fatos
-
 % Definição do reino
-reino(animais).
+reino(animalia).
 
-filo_do_reino(cordados, animais).
-filo_do_reino(artropodes, animais).
-filo_do_reino(poriferos, animais).
+filo_do_reino(chordata, animalia).
+filo_do_reino(arthropoda, animalia).
+filo_do_reino(porifera, animalia).
 
 % Definição de classes
-classe_do_filo(mamiferos, cordados).
-classe_do_filo(aves, cordados).
-classe_do_filo(repteis, cordados).
-classe_do_filo(peixes_osseos, cordados).
+classe_do_filo(mammalia, chordata).
+classe_do_filo(aves, chordata).
+classe_do_filo(reptilia, chordata).
+classe_do_filo(actinopterygii, chordata).
 
-classe_do_filo(insetos, artropodes).
+classe_do_filo(insecta, arthropoda).
 
-classe_do_filo(demosponjas, poriferos).
+classe_do_filo(demospongiae, porifera).
 
 % Definição de ordens
-ordem_da_classe(carnivoros, mamiferos).
-ordem_da_classe(artiodactilos, mamiferos).
-ordem_da_classe(perissodactilos, mamiferos).
-ordem_da_classe(cetaceos, mamiferos).
+ordem_da_classe(carnivora, mammalia).
+ordem_da_classe(artiodactyla, mammalia).
+ordem_da_classe(perissodactyla, mammalia).
+ordem_da_classe(cetacea, mammalia).
 
-ordem_da_classe(pinguins, aves).
+ordem_da_classe(sphenisciformes, aves).
 
-ordem_da_classe(crocodilianos, repteis).
-ordem_da_classe(escamados, repteis).
+ordem_da_classe(crocodylia, reptilia).
+ordem_da_classe(squamata, reptilia).
 
-ordem_da_classe(perciformes, peixes_osseos).
+ordem_da_classe(perciformes, actinopterygii).
 
-ordem_da_classe(lepidopteros, insetos).
+ordem_da_classe(lepidoptera, insecta).
+
+% Definição de subOrdem
+subordem_da_ordem(serpentes,squamata).
 
 % Definição de famílias
-familia_da_ordem(felinos, carnivoros).
-familia_da_ordem(canideos, carnivoros).
+familia_da_ordem(felidae, carnivora).
+familia_da_ordem(canidae, carnivora).
 
-familia_da_ordem(elefantes, artiodactilos).
-familia_da_ordem(girafas, artiodactilos).
-familia_da_ordem(equideos, artiodactilos).
+familia_da_ordem(elephantidae, artiodactyla).
+familia_da_ordem(giraffidae, artiodactyla).
+familia_da_ordem(equidae, artiodactyla).
 
-familia_da_ordem(rinocerontes, perissodactilos).
-familia_da_ordem(delfinideos, cetaceos).
-familia_da_ordem(baleias, cetaceos).
+familia_da_ordem(rhinocerotidae, perissodactyla).
+familia_da_ordem(delphinidae, cetacea).
+familia_da_ordem(balaenopteridae, cetacea).
 
-familia_da_ordem(spheniscideos, pinguins).
+familia_da_ordem(spheniscidae, sphenisciformes).
 
-familia_da_ordem(crocodilos, crocodilianos).
-familia_da_ordem(serpentes, escamados).
+familia_da_ordem(crocodylidae, crocodylia).
 
-familia_da_ordem(peixes_palhacos, perciformes).
+familia_da_ordem(pomacentridae, perciformes).
 
-familia_da_ordem(borboletas, lepidopteros).
-familia_da_ordem(esponjas, demosponjas).
+familia_da_ordem(lepidoptera, lepidoptera).
+
+familia_da_classe(spongidae, demospongiae).
 
 % Exemplos de espécies
-especie_da_familia(leao, felinos).
-especie_da_familia(tigre, felinos).
-especie_da_familia(gato, felinos).
+especie_da_familia(gato, felidae).
+especie_da_familia(leao, felidae).
+especie_da_familia(tigre, felidae).
 
-especie_da_familia(cao, canideos).
+especie_da_familia(cao, canidae).
 
-especie_da_familia(elefante, elefantes).
-especie_da_familia(girafa, girafas).
-especie_da_familia(cavalo, equideos).
+especie_da_familia(elefante, elephantidae).
 
-especie_da_familia(rinoceronte, rinocerontes).
-especie_da_familia(golfinho, delfinideos).
-especie_da_familia(baleia, baleias).
+especie_da_familia(girafa, giraffidae).
 
-especie_da_familia(pinguim, pinguins).
+especie_da_familia(cavalo, equidae).
 
-especie_da_familia(crocodilo, crocodilianos).
-especie_da_familia(jacare, crocodilianos).
+especie_da_familia(rinoceronte, rhinocerotidae).
 
-especie_da_familia(cobra, serpentes).
+especie_da_familia(golfinho, delphinidae).
 
-especie_da_familia(nemo, peixes_palhacos).
+especie_da_familia(baleia, balaenopteridae).
 
-especie_da_familia(borboleta, borboletas).
+especie_da_familia(pinguim, spheniscidae).
 
-especie_da_familia(esponja, esponjas).
+especie_da_familia(crocodilo, crocodylidae).
+especie_da_familia(jacare, crocodylidae).
 
-% Consultar taxonomia completa do animal animal
-consultar_taxonomia(X, Familia, Ordem, Classe, Filo, Reino) :- 
-  especie_da_familia(X, Familia),
+especie_da_familia(nemo, pomacentridae).
+
+especie_da_familia(borboleta, lepidoptera).
+
+especie_da_familia(esponja, spongidae).
+
+especie_da_subordem(cobra, serpentes).
+
+% Consultar por taxonomia
+consultar_taxonomia(Animal, Familia, Ordem, Classe, Filo, Reino) :-
+  especie_da_familia(Animal, Familia),
   familia_da_ordem(Familia, Ordem),
   ordem_da_classe(Ordem, Classe),
   classe_do_filo(Classe, Filo),
   filo_do_reino(Filo, Reino).
 
-% Cada nivel
+consultar_taxonomia_ordem(Animal, Familia, Ordem) :-
+  especie_da_familia(Animal, Familia),
+  familia_da_ordem(Familia, Ordem).
 
-animal_do_reino(X, Y) :- 
-  filo_do_reino(A, Y),
-  classe_do_filo(B, A),
-  ordem_da_classe(C, B),
-  familia_da_ordem(D, C),
-  especie_da_familia(X, D).
+consultar_taxonomia_classe(Animal, Familia, Ordem, Classe) :-
+  especie_da_familia(Animal, Familia),
+  familia_da_ordem(Familia, Ordem),
+  ordem_da_classe(Ordem, Classe).
 
-animal_do_filo(X, Y) :-
-  classe_do_filo(A, Y),
-  ordem_da_classe(B, A),
-  familia_da_ordem(C, B),
-  especie_da_familia(X, C).
+consultar_taxonomia_filo(Animal, Familia, Ordem, Classe, Filo) :-
+  especie_da_familia(Animal, Familia),
+  familia_da_ordem(Familia, Ordem),
+  ordem_da_classe(Ordem, Classe),
+  classe_do_filo(Classe, Filo).
 
-animal_da_classe(X, Y) :-
-  ordem_da_classe(A, Y),
-  familia_da_ordem(B, A),
-  especie_da_familia(X, B).
+% Consultando animal por cada nivel
+animal_da_familia(X,Y) :-
+  especie_da_familia(X, Y).
+
+animal_da_subordem(X,Y) :-
+  especie_da_subordem(X,Y).
 
 animal_da_ordem(X, Y) :-
   familia_da_ordem(A, Y),
-  especie_da_familia(X, A).
+  animal_da_familia(X,A);
+  subordem_da_ordem(Z,Y),
+  animal_da_subordem(X,Z).
 
-animal_da_familia(X, Y) :-
-  especie_da_familia(X, Y).
+animal_da_classe(X, Y) :-
+  ordem_da_classe(A, Y),
+  animal_da_ordem(X, A);
+  familia_da_classe(W, Y),
+  animal_da_familia(X, W).
+
+animal_do_filo(X, Y) :-
+  classe_do_filo(A, Y),
+  animal_da_classe(X, A).
