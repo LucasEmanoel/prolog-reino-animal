@@ -105,3 +105,14 @@ animal_do_filo(X, Y) :-
   familia_da_ordem(C, B),
   especie_da_familia(X, C).
 
+animal_da_classe(X, Y) :-
+  ordem_da_classe(A, Y),
+  familia_da_ordem(B, A),
+  especie_da_familia(X, B).
+
+animal_da_ordem(X, Y) :-
+  familia_da_ordem(A, Y),
+  especie_da_familia(X, A).
+
+animal_da_familia(X, Y) :-
+  especie_da_familia(X, Y).
