@@ -49,7 +49,7 @@ familia_da_ordem(spheniscideos, pinguins).
 familia_da_ordem(crocodilos, crocodilianos).
 familia_da_ordem(serpentes, escamados).
 
-familia_da_ordem(pomacentrideos, perciformes).
+familia_da_ordem(peixes_palhacos, perciformes).
 
 familia_da_ordem(borboletas, lepidopteros).
 familia_da_ordem(esponjas, demosponjas).
@@ -76,7 +76,7 @@ especie_da_familia(jacare, crocodilianos).
 
 especie_da_familia(cobra, serpentes).
 
-especie_da_familia(peixe_palhaco, perciformes).
+especie_da_familia(nemo, peixes_palhacos).
 
 especie_da_familia(borboleta, borboletas).
 
