@@ -92,5 +92,12 @@ consultar_taxonomia(X, Familia, Ordem, Classe, Filo, Reino) :-
 
 % Cada nivel
 
+animal_do_reino(X, Y) :- 
+  filo_do_reino(A, Y),
+  classe_do_filo(B, A),
+  ordem_da_classe(C, B),
+  familia_da_ordem(D, C),
+  especie_da_familia(X, D).
+
 
 
