@@ -162,6 +162,8 @@ predador_de_animal(X, Y) :-
   animal_forca_mordida(X, ForcaX),
   (PesoX > PesoY ; PesoY < ForcaX ).
 
+animal_presa_de(X, Y) :- predador_de_animal(Y, X). 
+
 % Consultar por taxonomia
 consultar_taxonomia(Animal, Familia, Ordem, Classe, Filo, Reino) :-
   especie_da_familia(Animal, Familia),
@@ -212,7 +214,7 @@ animal_do_filo(X, Y) :-
 % Consultar animais de cada hierarquia
 
 listar_animais_da_familia(Familia, Animais) :-
-    findall(Animal, animal_da_familia(Animal, Familia), Animais).
+  findall(Animal, animal_da_familia(Animal, Familia), Animais).
 
 listar_animais_da_ordem(Ordem, Animais) :-
     findall(Animal, animal_da_ordem(Animal, Ordem), Animais).
@@ -225,8 +227,8 @@ listar_animais_da_filo(Filo, Animais) :-
 
 
 
-
-:- begin_tests(taxinomia).
+% Testes de hierarquia
+:- begin_tests(taxinomia_hierarquia).
 
   test(girafa_filo_chordata) :-
     animal_do_filo(girafa, chordata),
@@ -241,29 +243,13 @@ listar_animais_da_filo(Filo, Animais) :-
   test(cao_familia_canidae) :-  % Corrigido para canidae
     animal_da_familia(cao, canidae).
 
-:- end_tests(taxinomia).
+:- end_tests(taxinomia_hierarquia).
+:- run_tests(taxinomia_hierarquia).
 
-% Para rodar os testes, use esta linha fora do bloco de testes ou como consulta interativa:
-:- run_tests(taxinomia).
-
+% Testes animal completo
 :- begin_tests(taxonomia_completa_animal).
-  test(girafa) :-
-    consultar_taxonomia(girafa, giraffidae, artiodactyla, mammalia, chordata, animalia).
-
   test(leao) :-
     consultar_taxonomia(leao, felidae, carnivora, mammalia, chordata, animalia).
-
-  test(golfinho) :-
-    consultar_taxonomia(golfinho, delphinidae, cetacea, mammalia, chordata, animalia).
-
-  test(pinguim) :-
-    consultar_taxonomia(pinguim, spheniscidae, sphenisciformes, aves, chordata, animalia).
-
-  test(borboleta) :-
-    consultar_taxonomia(borboleta, lepidoptera, lepidoptera, insecta, arthropoda, animalia).
-
-  test(esponja) :-
-    consultar_taxonomia(esponja, spongidae, demospongiae, porifera, animalia, animalia).
 
   test(cavalo) :-
     consultar_taxonomia(cavalo, equidae, artiodactyla, mammalia, chordata, animalia).
@@ -277,8 +263,40 @@ listar_animais_da_filo(Filo, Animais) :-
   test(jacare) :-
     consultar_taxonomia(jacare, crocodylidae, crocodylia, reptilia, chordata, animalia).
 
-  test(nemo) :-
-    consultar_taxonomia(nemo, pomacentridae, perciformes, actinopterygii, chordata, animalia).
+  test(cavalo_familia_errada) :-
+    \+ consultar_taxonomia(cavalo, crocodylidae, perciformes, actinopterygii, chordata, animalia).  
+
+  test(nao_existe) :-
+    \+ consultar_taxonomia(leopardo, pomacentridae, perciformes, actinopterygii, chordata, animalia).
 
 :- end_tests(taxonomia_completa_animal).
 :- run_tests(taxonomia_completa_animal).
+
+% Testes de listas 
+:- begin_tests(listas).
+
+  test(canideos) :-
+    listar_animais_da_familia(canidae, [cao]).
+
+  test(felinos) :-
+    listar_animais_da_familia(felidae, [gato, leao, tigre]).
+
+:- end_tests(listas).
+:- run_tests(listas).
+
+
+% Testes de predadores
+:- begin_tests(predadores).
+
+  test(leao_mata_girafa) :-
+    predador_de_animal(leao, girafa).
+
+  test(leao_mata_baleia) :-
+    \+ predador_de_animal(leao, baleia).
+
+  test(gato_presa_de_cao) :-
+    animal_presa_de(gato, cao).
+
+
+:- end_tests(predadores).
+:- run_tests(predadores).
